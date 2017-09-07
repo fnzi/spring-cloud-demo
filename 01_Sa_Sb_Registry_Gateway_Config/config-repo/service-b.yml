@@ -1,0 +1,16 @@
+server:
+  port: 8090
+  
+msg: Hello
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+

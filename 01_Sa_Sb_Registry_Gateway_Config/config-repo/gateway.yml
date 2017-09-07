@@ -1,0 +1,47 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+management:
+  security:
+    enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    baidu1:
+      path: /baidu/**
+      url: http://www.baidu.com/
+    confluce1:
+      path: /confluce/**
+      url: http://172.16.42.17:8090/
+    jira:
+      path: /jira/**
+      url: http://172.16.42.17:8080
+    service-a:
+      path: /sa/**
+      sensitiveHeaders:
+    service-b:
+      path: /sb/**
+      sensitiveHeaders:
