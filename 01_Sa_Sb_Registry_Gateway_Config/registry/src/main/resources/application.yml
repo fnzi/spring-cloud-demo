@@ -1,0 +1,26 @@
+server:
+  port: 8761
+
+eureka:
+  environment: dev
+  datacenter: ias
+  instance:
+    hostname: localhost
+    statusPageUrl: https://${eureka.hostname}/info
+    healthCheckUrl: https://${eureka.hostname}/health
+    homePageUrl: https://${eureka.hostname}/
+  server:
+#    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: user
+    password: ${REGISTRY_SERVER_PASSWORD:password}
